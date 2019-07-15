@@ -1,0 +1,156 @@
+<button (click)="getCustomerList()">Refresh Customer List</button>
+<button (click)="emptyCustomer()">Create New Customer</button>
+<table *ngIf="customers">
+    <tr>
+        <th>Customer Name</th>
+        <th>Middle Name</th>
+        <th>Last Name</th>
+        <th>Date Of Birth</th>
+        <th>Mobile Number</th>
+        <th>Gender</th>
+        <th>Customer Number</th>
+        <th>Birth Country</th>
+        <th>Residence Country</th>
+        <th>Customer Segment</th>
+        <th></th>
+    </tr>
+    <tr *ngFor = "let cust of customers">
+        <td>{{ cust["first-name"] }} </td>
+        <td>{{ cust["middle-name"] }} </td>
+        <td>{{ cust["last-name"] }} </td>
+        <td>{{ cust["date-of-birth"] }} </td>
+        <td> {{ cust["mobile-number"] }} </td>
+        <td> {{ cust["gender"] }} </td>
+        <td> {{ cust["customer-number"] }} </td>
+        <td> {{ cust["country-of-birth"] }} </td>
+        <td> {{ cust["country-of-residence"] }} </td>
+        <td> {{ cust["customer-segment"] }} </td>
+        <td> <button (click)="custSelected(cust)">Select</button></td>
+    </tr>
+</table>
+
+<div *ngIf="customer">
+    <h3>Customer Details</h3>
+    <table >
+        <tr>
+            <th>First Name</th>
+            <input type="text" [(ngModel)]="customer['first-name']" placeholder="First Name"/>
+        </tr>
+
+        <tr>
+            <th>Middle Name</th>
+            <input type="text" [(ngModel)]="customer['middle-name']" placeholder="Middle Name"/>
+        </tr>
+
+        <tr>
+            <th>Last Name</th>
+            <input type="text" [(ngModel)]="customer['last-name']" placeholder="Last Name"/>
+        </tr>
+            
+        <tr>
+            <th>Date OF Birth</th>
+            <input type="text" [(ngModel)]="customer['date-of-birth']" placeholder="Date Of Birth"/>
+        </tr>
+
+        <tr>
+            <th>Mobile Number</th>
+            <input type="text" [(ngModel)]="customer['mobile-number']" placeholder="Mobile Number"/>
+        </tr>
+        
+        <tr>
+            <th>Gender</th>
+            <input type="text" [(ngModel)]="customer['gender']" placeholder="Gender"/>
+        </tr>
+
+
+        <tr>
+            <th>Customer Number</th>
+            <input *ngIf="isCreateNew" type="text" [(ngModel)]="customer['customer-number']" placeholder="Customer Number"/>
+            <input *ngIf="isModify" type="text" [(ngModel)]="customer['customer-number']" placeholder="Customer Number" disabled=true/>
+        </tr>
+
+        <tr>
+            <th>Birth Country</th>
+            <input type="text" [(ngModel)]="customer['country-of-birth']" placeholder="Birth Country"/>
+        </tr>
+        
+        <tr>
+            <th>Residence Country</th>
+            <input type="text" [(ngModel)]="customer['country-of-residence']" placeholder="Residence Country"/>
+        </tr>
+
+        <tr>
+            <th>Customer Segment</th>
+            <input type="text" [(ngModel)]="customer['customer-segment']" placeholder="Customer Segment"/>
+        </tr>
+    </table>
+    <h4>Customer Address Details</h4>
+    <table *ngIf ="customer.addresses">
+            <tr>
+                <th>Type</th>
+                <th>Address Line 1</th>
+                <th>Address Line 2</th>
+                <th>Address Line 3</th>
+                <th>Address Line 4</th>
+                <th>Country Code</th>
+                <th>Zipcode</th>
+                <th>State</th>
+                <th>City</th>
+            </tr>
+            <tr *ngFor = "let addr of customer.addresses">
+                <td><input type="text" [(ngModel)]="addr['type']" placeholder="Type"/></td>
+                <td><input type="text" [(ngModel)]="addr['addr-line1']" placeholder="Address Line 1"/></td>
+                <td><input type="text" [(ngModel)]="addr['addr-line2']" placeholder="Address Line 2"/></td>
+                <td><input type="text" [(ngModel)]="addr['addr-line3']" placeholder="Address Line 3"/></td>
+                <td><input type="text" [(ngModel)]="addr['addr-line4']" placeholder="Address Line 4"/></td>
+                <td><input type="text" [(ngModel)]="addr['country-code']" placeholder="Country Code"/></td>
+                <td><input type="text" [(ngModel)]="addr['zipcode']" placeholder="Zip Code"/></td>
+                <td><input type="text" [(ngModel)]="addr['state']" placeholder="State"/></td>
+                <td><input type="text" [(ngModel)]="addr['city']" placeholder="city"/></td>
+            </tr>
+        </table>            
+</div>
+<div *ngIf="isCreateNew">
+    <button (click)="createNewCustomer()">Create</button>
+</div>
+<div *ngIf="isModify">
+    <button (click)="modifyCustomer()">Modify</button>
+    <button (click)="deleteCustomer()">Delete</button>
+</div>
+    
+<!--
+<div *ngIf="customer">
+    <p>First Name : {{ customer["first-name"] }} </p>
+    <p>Middle Name : {{ customer["middle-name"] }} </p>
+    <p>Last Name : {{ customer["last-name"] }} </p>
+    <p>Mobile Number : {{ customer["mobile-number"] }} </p>
+    <p>Date Of Birth : {{ customer["date-of-birth"] }} </p>
+    <p>Country of Birth : {{ customer["country-of-birth"] }} </p>
+    <p>Customer Number : {{ customer["customer-number"] }} </p>
+    <p>Addresses : </p>
+    <table *ngIf ="customer.addresses">
+        <tr>
+            <th>Type</th>
+            <th>Address Line 1</th>
+            <th>Address Line 2</th>
+            <th>Address Line 3</th>
+            <th>Address Line 4</th>
+            <th>Country Code</th>
+            <th>Zipcode</th>
+            <th>State</th>
+            <th>City</th>
+        </tr>
+        <tr *ngFor = "let addr of customer.addresses">
+            <td>{{ addr["type"] }}</td>
+            <td>{{ addr["addr-line1"] }}</td>
+            <td>{{ addr["addr-line2"] }}</td>
+            <td>{{ addr["addr-line3"] }}</td>
+            <td> {{ addr["addr-line4"] }}</td>
+            <td> {{ addr["country-code"] }}</td>
+            <td> {{ addr["zipcode"] }}</td>
+            <td> {{ addr["state"] }}</td>
+            <td> {{ addr["city"] }}</td>
+        </tr>
+    </table>
+</div>
+-->
